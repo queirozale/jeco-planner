@@ -11,6 +11,9 @@ interface SuccessResponseType {
   email: string;
   cellphone: string;
   type: string;
+  type_var1: string;
+  type_var2: string;
+  type_var3: string;
 
 }
 
@@ -18,12 +21,29 @@ export default async (
   req: NextApiRequest, 
   res: NextApiResponse<ErrorResponseType | SuccessResponseType>
   ): Promise<void> => {
-    const { name, email, cellphone, type } = req.body;
-    
-    if (!name || !email || !cellphone || !type) {
-      res.status(400).json({ error: "Missing body parameter" });
-      return;
+    const { name, email, cellphone, type,
+            type_var1, type_var2, type_var3 } = req.body;
+
+    if (type === "false") {
+      if (!name || !email || !cellphone || !type) {
+        res.status(400).json({ error: "Missing body parameter" });
+        return;
+      }
+    } else if (type === "true") {
+      if (
+        !name ||
+        !email ||
+        !cellphone ||
+        !type ||
+        !type_var1 ||
+        !type_var2 ||
+        !type_var3
+      ) {
+        res.status(400).json({ error: "Missing body parameter" });
+        return;
+      }
     }
+    
     
     const { db } = await connect();
 
