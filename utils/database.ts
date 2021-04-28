@@ -13,6 +13,6 @@ const client = new MongoClient(process.env.DATABASE_URL, {
 export default async function connect(): Promise<ConnectType> {
   if (!client.isConnected()) await client.connect();
 
-  const db = client.db('base-project');
+  const db = client.db('jeco');
   return { db, client }
 };
